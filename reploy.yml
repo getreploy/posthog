@@ -1,0 +1,23 @@
+services:
+  backend:
+    port: 8000
+    image: reploy/python3:v1
+    commands:
+      # - apt-get install python-psycopg2
+      - pip3 install -r requirements.txt
+      - python manage.py runserver
+  frontend:
+    port: 3000
+    image: reploy/nodejs:v1
+    commands:
+      - yarn install
+      - yarn start
+  database:
+    port: 5432
+    image: gcr.io/himank-jay/postgres:v1
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "default"
+  cache:
+    port: 6379
+    image: gcr.io/himank-jay/redis:v1

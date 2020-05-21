@@ -1,23 +1,16 @@
 services:
   backend:
-    port: 8080
+    port: 8000
     image: reploy/python3:v1
     commands:
       - pip install -r requirements.txt
-      - go build -o reploy
-      - printenv
-      - ./reploy
+      - python manage.py runserver
   frontend:
     port: 3000
     image: reploy/nodejs:v1
     commands:
-      - cd frontend
-      - npm install
-      - npm run build
-      - printenv
-      - echo $REPLOY_BACKEND
-      - echo $REPLOY
-      - npx serve build/ -l 3000
+      - yarn install
+      - yarn start
   database:
     port: 5432
     image: gcr.io/himank-jay/postgres:v1

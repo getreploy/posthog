@@ -1,0 +1,29 @@
+services:
+  backend:
+    port: 8080
+    image: reploy/python3:v1
+    commands:
+      - pip install -r requirements.txt
+      - go build -o reploy
+      - printenv
+      - ./reploy
+  frontend:
+    port: 3000
+    image: reploy/nodejs:v1
+    commands:
+      - cd frontend
+      - npm install
+      - npm run build
+      - printenv
+      - echo $REPLOY_BACKEND
+      - echo $REPLOY
+      - npx serve build/ -l 3000
+  database:
+    port: 5432
+    image: gcr.io/himank-jay/postgres:v1
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "default"
+  cache:
+    port: 6379
+    image: gcr.io/himank-jay/redis:v1
